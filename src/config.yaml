@@ -1,0 +1,7 @@
+---
+data:
+    path: "./data/name_gender.csv"
+    test_path: "./data/name_gender.csv"
+---
+train:
+    ngram: [3,4]

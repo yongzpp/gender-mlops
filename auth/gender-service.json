@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "gender-mlops",
+  "private_key_id": "661f47b712bf1b243894df8516c06a8b0fe1c2d0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDNBHlDtPHhBQ/7\nl9KJYf8Kle6ZyiOaKMJisKdIG8Ap6mHKqAJarAGJ23gnLrYLSJN4tDi4pHqs05e7\nZ1BSduqUAN++Mg/9kXFCm/Nc/EYibvOepnPkuOv35SmT9XW7VPsyvKoQ8MMzFG0j\nIcxAnDjadOyQNaH2avLhKex9PYS8ewB9zExSzkCTIDwsUxV4/ooi6aOPHWcpI1E6\nqPu1GMPVf4LJO3bUIoEUNfviC+3LDWrUIRo0ryApnmAKOlVe+O3WSOA1Jq7jaE7L\n8zRbZ9iQK9DgvskwLbPJZWIgAmi/0pXTKffRkL5eMP7KuQTvdP3XfTrI3vwZm69G\n3MdHLwYvAgMBAAECggEASm5SXCtoGSqOV+gRroDeaAhw3HKPpFsh31SFFt/ETzNh\nl4KRgDusP1FneMozmzsZFxxO73H/e5lCH+5tMdMsbNk4YcOpHITeGrGlk9+e0sd3\nOOTzdFlSiegvxSC7Qmyi2hO2pnnSVEwZJ0UQ83AEEAOdEun1yBGh5e8jhYB9HTPg\nSl8T41pSh2dM7jFow52M0/RZe8l+mHocb+L5vBQHa004lrOvry3LvIP78UNqCbHg\nkFuA8/bQz8rF/ApLi6wufnoXoW106jwreJXqw8bb2mY3mT2EEF11eXQgYV8sRRfg\nE3vAvjd2gaXjKQJ2E5vHOX+ZdDehVPZ8Kd+Zy9t7CQKBgQDuYX0+XYTPEz6DmnFk\nDjrIrBM/5YKMVmm9XeysPFCOxSK2MX0F+u+2oTleHBDkYaEdUaqy4aCoqRNgLcJJ\n9THaerkvPHf7ytqZJoBruhywsqs/0s79ZyTn1lXs2f7qlpCkTL9na1VjQVHwL+xV\nyU8QiYhGLT8p5GMZd3siRAZzIwKBgQDcK7Oe1ys7Z2UfbM/EqlxJtLaXImQS/6Ya\nl6JEDjDIsOXKNzqBCvovqP3WhCD7byBhlZIS2MnVptRhpS8LykV/YCj4MYjVVfp6\n7HprTkROURnmWb8mMsiV/d3/pUhjuOfaRR5wOpbYvTclmUlaat7UiIMDZLUC6Nzy\nCVAcNifHhQKBgQDhy6wzb6fF8YeMZrUzPhtGS1/sbTwMLCn6ekYdGwB/S5HGm/e9\nu2RmTC6nytPhT+ypddrHl9pzB7vXpWBcZ4lyVj6k1JUeBpaq7IJGCEL2yDZXvRnd\ng168zxQSxqaklDurtRq0HkICQzQW2330ADwJAQz41BD5YGDSFY+n9GFbmwKBgEvP\naGvbHvG3amRlrSzElD500SI9H0RDbshdSewxDq8r6hO07JoeU4MxpyXEHS82VmoD\nfGas6uJ8LUjp/ccLgN6ZF8JOHBWJI1RMNOLZ8j8dQdPFN0JJ3jN3VIeAO+rKclr/\nzblLE0HR9TknDNDrV4rK7oGunX1A/UMB3em44/2ZAoGAccwAr5ccWw1rv9ZSHCKW\nRLd86lTH2e4OysMrgd2AeZxa16j/aRe8LHOJ2Bf1pEOpefaWhvlclBiZuF6IKng/\nXSnCn2i+xhQhxo5lds1sv12Iyo4IRDwaZqoh9w3yxKswZL+DJYSKOYR3W90W3Zdu\nA73YlFpbRf+iYv1oJkZTNgk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "gender-service@gender-mlops.iam.gserviceaccount.com",
+  "client_id": "105138139777246752208",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gender-service%40gender-mlops.iam.gserviceaccount.com"
+}
