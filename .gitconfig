@@ -1,0 +1,5 @@
+[user]
+	name = yongzpp
+	email = ziping97@gmail.com
+[core]
+	excludesfile = /home/rsa-key-20221205/gender-revised/.gitignore
