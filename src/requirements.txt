@@ -2,7 +2,7 @@ pyyaml
 pandas
 scikit-learn
 #hyperopt
-google-auth 
+google-auth
 google-api-python-client
 pandas-gbq
 mlflow
