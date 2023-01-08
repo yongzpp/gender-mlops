@@ -1,8 +1,8 @@
 services:
-    image: gender-image:v1
+    build: ./src
     ports:
       - "9696:9696"
     environment:
       - RUN_ID="ec4f26291d42414ba2b8908d8be7a99d"
     volumes:
-      - "./model:/app/model"
+      - ".:/app/gender-revised"

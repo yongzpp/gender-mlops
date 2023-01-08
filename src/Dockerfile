@@ -2,7 +2,7 @@ FROM python:3.10-slim
 
 EXPOSE 9696
 
-ADD . . 
+ADD . .
 RUN python -m pip install -r requirements.txt
 
 ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "predict:app"]
