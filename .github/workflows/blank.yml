@@ -33,18 +33,18 @@ jobs:
           python-version: 3.10.8
 
       - name: Install dependencies
-        working-directory: "/home/rsa-key-20221205/gender-revised"
+        #working-directory: "/home/rsa-key-20221205/gender-revised"
         run: pip install requirements.txt
 
       - name: Run Unit tests
-        working-directory: "/home/rsa-key-20221205/gender-revised"
+        #working-directory: "/home/rsa-key-20221205/gender-revised"
         run: pytest tests/
 
       - name: Lint
-        working-directory: "/home/rsa-key-20221205/gender-revised"
+        #working-directory: "/home/rsa-key-20221205/gender-revised"
         run: pylint --recursive=y .
 
       - name: Integration Test
-        working-directory: '/home/rsa-key-20221205/gender-revised'
+        #working-directory: '/home/rsa-key-20221205/gender-revised'
         run: |
           . run.sh
