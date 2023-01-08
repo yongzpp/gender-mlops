@@ -17,7 +17,7 @@ from config import cfg
 
 TRACKING_SERVER_HOST = "0.0.0.0"
 mlflow.set_tracking_uri(f"http://{TRACKING_SERVER_HOST}:5000")
-gcs_block = GCS.load("gender-prefect-store")
+# gcs_block = GCS.load("gender-prefect-store")
 
 
 class ModelService:
