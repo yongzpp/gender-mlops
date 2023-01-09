@@ -5,4 +5,4 @@ EXPOSE 9696
 ADD . .
 RUN python -m pip install -r requirements.txt
 
-ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "--chdir=./src" "predict:app"]
+ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "predict:app"]
