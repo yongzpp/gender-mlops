@@ -13,7 +13,7 @@
 #     echo "no need to build image ${LOCAL_IMAGE_NAME}"
 # fi
 
-sudo docker-compose up -d
+sudo docker-compose up
 
 sleep 5
 
