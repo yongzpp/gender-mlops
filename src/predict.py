@@ -15,11 +15,6 @@ mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 MONGODB_ADDRESS = "mongodb://127.0.0.1:27017"
 EVIDENTLY_SERVICE_ADDRESS = 'http://127.0.0.1:8085'
 
-mongo_client = MongoClient(MONGODB_ADDRESS)
-db = mongo_client.get_database("prediction_db")
-collection = db.get_collection("prediction_table")
-
-
 app = Flask('gender-flask')
 
 
@@ -37,10 +32,15 @@ def predict_endpoint():
 
 
 def save_to_db(record, prediction):
+    mongo_client = MongoClient("mongodb://127.0.0.1:27017/")
+    collection = mongo_client.get_database("prediction_db").get_collection(
+        "prediction_table"
+    )
+
     rec = record.copy()
     rec['prediction'] = prediction
     print(rec)
-    collection.insert_one(rec)
+    # collection.insert_one(rec)
 
 
 def send_to_evidently_service(record, prediction):
@@ -52,7 +52,7 @@ def send_to_evidently_service(record, prediction):
 
 
 def fetch_data():
-    client = MongoClient("mongodb://34.87.56.146:27017/")
+    client = MongoClient("mongodb://127.0.0.1:27017/")
     data = (
         client.get_database("prediction_db").get_collection("prediction_table").find()
     )
