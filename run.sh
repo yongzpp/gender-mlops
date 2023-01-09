@@ -19,8 +19,6 @@ sleep 5
 
 sudo apt install -y software-properties-common gnupg apt-transport-https ca-certificates
 echo 'a'
-#sudo apt install -y mongodb
-#echo 'b'
 
 wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
 echo 'c'
@@ -36,6 +34,7 @@ echo 'f'
 
 sudo systemctl start mongod
 echo 'g'
+sudo systemctl status mongod
 
 
 python ./tests/integration_test.py
