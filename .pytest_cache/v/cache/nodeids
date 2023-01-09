@@ -1,0 +1,6 @@
+[
+  "tests/integration_test.py::test_mongo",
+  "tests/integration_test.py::test_predict",
+  "tests/unit_test.py::test_predict",
+  "tests/unit_test.py::test_prepare_features"
+]

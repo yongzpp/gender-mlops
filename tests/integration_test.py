@@ -1,7 +1,12 @@
 import json
+import sys
 
 import requests
 from deepdiff import DeepDiff
+
+sys.path.append('./src')
+
+from predict import fetch_data
 
 with open('./tests/event.json', 'rt', encoding='utf-8') as f_in:
     event = json.load(f_in)
@@ -26,5 +31,17 @@ def test_predict():
     assert 'values_changed' not in diff
 
 
+def test_mongo():
+    url = 'http://35.185.177.181:9696/predict'
+    actual_response = requests.post(url, json=event, timeout=10000).json()
+    print('actual response:')
+
+    prediction_df = fetch_data()
+    print(prediction_df)
+
+    assert "Baby Bugs" in list(prediction_df["name"])
+
+
 if __name__ == '__main__':
     test_predict()
+    test_mongo()

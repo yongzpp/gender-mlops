@@ -1,17 +1,23 @@
 import mlflow
 import pandas as pd
+import requests
 from flask import Flask, jsonify, request
-from mlflow.tracking import MlflowClient
+from pymongo import MongoClient
 
 from model import ModelService
-
-# from pymongo import MongoClient
-
 
 RUN_ID = 'ec4f26291d42414ba2b8908d8be7a99d'
 
 MLFLOW_TRACKING_URI = 'http://localhost:5000'
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+
+
+MONGODB_ADDRESS = "mongodb://127.0.0.1:27017"
+EVIDENTLY_SERVICE_ADDRESS = 'http://127.0.0.1:8085'
+
+mongo_client = MongoClient(MONGODB_ADDRESS)
+db = mongo_client.get_database("prediction_db")
+collection = db.get_collection("prediction_table")
 
 
 app = Flask('gender-flask')
@@ -25,7 +31,33 @@ def predict_endpoint():
     model = ModelService(RUN_ID)
     pred = model.predict(features)
     result = {'gender': pred, 'model_version': RUN_ID}
+    save_to_db(name, pred)
+    # send_to_evidently_service(name, pred)
     return jsonify(result)
+
+
+def save_to_db(record, prediction):
+    rec = record.copy()
+    rec['prediction'] = prediction
+    print(rec)
+    collection.insert_one(rec)
+
+
+def send_to_evidently_service(record, prediction):
+    rec = record.copy()
+    rec['gender'] = prediction
+    requests.post(
+        f"{EVIDENTLY_SERVICE_ADDRESS}/iterate/gender", json=[rec], timeout=1000
+    )
+
+
+def fetch_data():
+    client = MongoClient("mongodb://localhost:27017/")
+    data = (
+        client.get_database("prediction_db").get_collection("prediction_table").find()
+    )
+    dataframe = pd.DataFrame(list(data))
+    return dataframe
 
 
 if __name__ == "__main__":
