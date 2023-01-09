@@ -52,7 +52,7 @@ def send_to_evidently_service(record, prediction):
 
 
 def fetch_data():
-    client = MongoClient("mongodb://localhost:27017/")
+    client = MongoClient("mongodb://34.87.56.146:27017/")
     data = (
         client.get_database("prediction_db").get_collection("prediction_table").find()
     )
