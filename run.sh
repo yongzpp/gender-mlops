@@ -17,6 +17,8 @@ sudo docker-compose up -d
 
 sleep 5
 
+sudo systemctl start mongod
+
 python ./tests/integration_test.py
 
 ERROR_CODE=$?

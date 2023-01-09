@@ -14,7 +14,7 @@ with open('./tests/event.json', 'rt', encoding='utf-8') as f_in:
 
 def test_predict():
     url = 'http://127.0.0.1:9696/predict'
-    actual_response = requests.post(url, json=event, timeout=10000).json()
+    actual_response = requests.post(url, json=event, timeout=10).json()
     print('actual response:')
 
     print(json.dumps(actual_response, indent=2))
@@ -32,8 +32,8 @@ def test_predict():
 
 
 def test_mongo():
-    url = 'http://35.185.177.181:9696/predict'
-    actual_response = requests.post(url, json=event, timeout=10000).json()
+    url = 'http://127.0.0.1:9696/predict'
+    actual_response = requests.post(url, json=event, timeout=10).json()
     print('actual response:')
 
     prediction_df = fetch_data()
