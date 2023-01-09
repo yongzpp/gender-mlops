@@ -26,7 +26,7 @@ def predict_endpoint():
     model = ModelService(RUN_ID)
     pred = model.predict(features)
     result = {'gender': pred, 'model_version': RUN_ID}
-    save_to_db(name, pred)
+    # save_to_db(name, pred)
     # send_to_evidently_service(name, pred)
     return jsonify(result)
 
