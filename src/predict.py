@@ -40,7 +40,7 @@ def save_to_db(record, prediction):
     rec = record.copy()
     rec['prediction'] = prediction
     print(rec)
-    # collection.insert_one(rec)
+    collection.insert_one(rec)
 
 
 def send_to_evidently_service(record, prediction):

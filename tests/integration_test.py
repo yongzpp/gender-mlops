@@ -13,7 +13,7 @@ with open('./tests/event.json', 'rt', encoding='utf-8') as f_in:
 
 
 def test_predict():
-    url = 'http://127.0.0.1:9696/predict'
+    url = 'http://34.87.56.146:9696/predict'
     actual_response = requests.post(url, json=event, timeout=100).json()
     print('actual response:')
 
