@@ -1,5 +1,6 @@
 import os
 
+import logging
 import mlflow
 import pandas as pd
 import requests
@@ -7,6 +8,10 @@ from flask import Flask, jsonify, request
 from pymongo import MongoClient
 
 from model import ModelService
+
+logging.basicConfig(
+    level=logging.INFO
+)
 
 RUN_ID = 'ec4f26291d42414ba2b8908d8be7a99d'
 
@@ -32,8 +37,11 @@ def predict_endpoint():
     model = ModelService(RUN_ID)
     pred = model.predict(features)
     result = {'name': name["name"], 'gender': pred, 'model_version': RUN_ID}
+    logging.info("Prediction Done...")
     save_to_db(name, pred)
+    logging.info("Saved to Database...")
     send_to_evidently_service(name, pred)
+    logging.info("Sent to Dashboard...")
     return jsonify(result)
 
 
