@@ -1,3 +1,5 @@
+import os
+
 import mlflow
 import pandas as pd
 import requests
@@ -12,10 +14,14 @@ MLFLOW_TRACKING_URI = 'http://localhost:5000'
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
 
-MONGODB_ADDRESS = "mongodb://127.0.0.1:27017"
-EVIDENTLY_SERVICE_ADDRESS = 'http://127.0.0.1:8085'
+EVIDENTLY_SERVICE_ADDRESS = os.getenv('EVIDENTLY_SERVICE', 'http://127.0.0.1:5000')
+MONGODB_ADDRESS = os.getenv("MONGODB_ADDRESS", "mongodb://127.0.0.1:27017")
 
-app = Flask('gender-flask')
+mongo_client = MongoClient(MONGODB_ADDRESS)
+db = mongo_client.get_database("prediction_service")
+collection = db.get_collection("data")
+
+app = Flask(__name__)
 
 
 @app.route('/predict', methods=['POST'])
@@ -25,40 +31,30 @@ def predict_endpoint():
 
     model = ModelService(RUN_ID)
     pred = model.predict(features)
-    result = {'gender': pred, 'model_version': RUN_ID}
-    # save_to_db(name, pred)
-    # send_to_evidently_service(name, pred)
+    result = {'name': name["name"], 'gender': pred, 'model_version': RUN_ID}
+    save_to_db(name, pred)
+    send_to_evidently_service(name, pred)
     return jsonify(result)
 
 
 def save_to_db(record, prediction):
-    mongo_client = MongoClient("mongodb://127.0.0.1:27017/")
-    collection = mongo_client.get_database("prediction_db").get_collection(
-        "prediction_table"
-    )
-
     rec = record.copy()
     rec['prediction'] = prediction
-    print(rec)
     collection.insert_one(rec)
 
 
 def send_to_evidently_service(record, prediction):
     rec = record.copy()
-    rec['gender'] = prediction
+    rec['prediction'] = prediction
     requests.post(
         f"{EVIDENTLY_SERVICE_ADDRESS}/iterate/gender", json=[rec], timeout=1000
     )
 
 
 def fetch_data():
-    client = MongoClient("mongodb://127.0.0.1:27017/")
-    data = (
-        client.get_database("prediction_db").get_collection("prediction_table").find()
-    )
-    dataframe = pd.DataFrame(list(data))
-    return dataframe
+    data_db = list(collection.find())
+    return len(data_db)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=9696)
+    app.run(debug=True)

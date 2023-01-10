@@ -17,7 +17,10 @@ disable = [
     "consider-using-with",
     "no-name-in-module",
     "wrong-import-position",
-    "unused-variable"
+    "unused-variable",
+    "global-variable-not-assigned",
+    "f-string-without-interpolation",
+    "consider-using-sys-exit"
 ]
 
 [tool.black]
