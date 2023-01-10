@@ -1,8 +1,13 @@
-FROM python:3.10-slim
+FROM python:3.8-slim-buster
 
-EXPOSE 9696
+WORKDIR /app
 
-ADD . .
-RUN python -m pip install -r requirements.txt
+COPY requirements.txt requirements.txt
 
-ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "predict:app"]
+RUN pip3 install -r requirements.txt
+
+RUN pip3 install evidently
+
+COPY . .
+
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=9696"]

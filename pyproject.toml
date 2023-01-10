@@ -11,12 +11,16 @@ disable = [
     "wrong-import-order",
     "too-many-arguments",
     "line-too-long",
-    "trailing-whitespace",    
+    "trailing-whitespace",
     "logging-fstring-interpolation",
     "ungrouped-imports",
     "consider-using-with",
     "no-name-in-module",
-    "wrong-import-position"
+    "wrong-import-position",
+    "unused-variable",
+    "global-variable-not-assigned",
+    "f-string-without-interpolation",
+    "consider-using-sys-exit"
 ]
 
 [tool.black]
