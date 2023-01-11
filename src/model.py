@@ -76,34 +76,36 @@ class ModelService:
     def save_results(self, df, y_pred, run_id, output_file):
         df_result = pd.DataFrame()
         df_result['name'] = df['name']
-        df_result['gender'] = y_pred
+        df_result['prediction'] = y_pred
         df_result['model_version'] = run_id
+        df_result['gender'] = df["gender"]
+        df_result['numerical'] = df["numerical"]
         # df_result.to_parquet("./results/predictions.parquet", index=False)
         df_result.to_csv(output_file, index=False)
 
     def apply_model(self, input_file, run_id, output_file):
-        logger = get_run_logger()
+        # logger = get_run_logger()
 
-        logger.info(f'Reading the data from {input_file}...')
+        # logger.info(f'Reading the data from {input_file}...')
         data = pd.read_csv(input_file)
         features = ModelService.prepare_features(data['name'])
+        # logger.info(f'Loading the model with RUN_ID={run_id}...')
 
-        logger.info(f'Loading the model with RUN_ID={run_id}...')
-
-        logger.info('Applying the model...')
+        # logger.info('Applying the model...')
         y_pred = self.predict(features)
 
-        logger.info(f'Saving the result to {output_file}...')
+        # logger.info(f'Saving the result to {output_file}...')
         self.save_results(data, y_pred, run_id, output_file)
         return output_file
 
     def batch_predict(self):
-        ctx = get_run_context()
-        run_date = ctx.flow_run.expected_start_time
+        # ctx = get_run_context()
+        # run_date = ctx.flow_run.expected_start_time
 
         input_file, output_file = (
             cfg.data.test_path,
-            f"../results/predictions_{run_date}.csv",
+            # f"../results/predictions_{run_date}.csv",
+            f"./results/target.csv",
         )
 
         self.apply_model(
@@ -112,4 +114,4 @@ class ModelService:
 
     def predict(self, features):
         pred = self.model.predict(features)
-        return pred[0]
+        return pred

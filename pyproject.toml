@@ -20,7 +20,8 @@ disable = [
     "unused-variable",
     "global-variable-not-assigned",
     "f-string-without-interpolation",
-    "consider-using-sys-exit"
+    "consider-using-sys-exit",
+    "duplicate-code"
 ]
 
 [tool.black]

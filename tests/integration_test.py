@@ -12,6 +12,9 @@ import pandas as pd
 
 from app import fetch_data
 from config import cfg
+from model import ModelService
+
+RUN_ID = '5bd26caf8a64400e89e3734bf8aa3200'
 
 with open('./tests/event.json', 'rt', encoding='utf-8') as f_in:
     event = json.load(f_in)
@@ -46,13 +49,13 @@ def test_mongo():
     assert "Baby Bugs" in list(prediction_df["name"])
 
 
-def test_batch_predict():
+def test_online_predict():
     data = pd.read_csv(cfg.data.test_path)
 
     url = 'http://127.0.0.1:9696/predict'
 
     for index, row in data.iterrows():
-        if index >= 10:
+        if index >= 50:
             break
         data = {
             'name': row["name"],
@@ -61,10 +64,16 @@ def test_batch_predict():
         }
         resp = requests.post(url, json=data, timeout=1000).json()
         print(f"prediction: {resp['gender']}")
-        sleep(1)
+        sleep(2)
+
+
+def test_batch_predict():
+    model = ModelService(RUN_ID)
+    model.batch_predict()
 
 
 if __name__ == '__main__':
-    test_predict()
-    #test_mongo()
+    # test_predict()
+    # test_mongo()
+    test_online_predict()
     test_batch_predict()

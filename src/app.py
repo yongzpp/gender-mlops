@@ -1,6 +1,6 @@
+import logging
 import os
 
-import logging
 import mlflow
 import pandas as pd
 import requests
@@ -9,9 +9,7 @@ from pymongo import MongoClient
 
 from model import ModelService
 
-logging.basicConfig(
-    level=logging.INFO
-)
+logging.basicConfig(level=logging.INFO)
 
 RUN_ID = 'ec4f26291d42414ba2b8908d8be7a99d'
 
@@ -35,7 +33,7 @@ def predict_endpoint():
     features = ModelService.prepare_features(pd.Series(name["name"]))
 
     model = ModelService(RUN_ID)
-    pred = model.predict(features)
+    pred = model.predict(features)[0]
     result = {'name': name["name"], 'gender': pred, 'model_version': RUN_ID}
     logging.info("Prediction Done...")
     save_to_db(name, pred)
