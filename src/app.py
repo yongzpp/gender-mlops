@@ -60,8 +60,8 @@ def send_to_evidently_service(record, prediction):
 
 
 def fetch_data():
-    data_db = list(collection.find())
-    return len(data_db)
+    data_db = collection.find()
+    return data_db
 
 
 if __name__ == "__main__":

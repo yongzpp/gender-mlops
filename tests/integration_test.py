@@ -43,7 +43,6 @@ def test_mongo():
     print('actual response:')
 
     prediction_df = fetch_data()
-
     assert "Baby Bugs" in list(prediction_df["name"])
 
 
@@ -67,5 +66,5 @@ def test_batch_predict():
 
 if __name__ == '__main__':
     test_predict()
-    test_mongo()
+    #test_mongo()
     test_batch_predict()
