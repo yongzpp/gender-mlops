@@ -25,6 +25,9 @@ from evidently.runner.loader import DataLoader, DataOptions
 from flask import Flask
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
+from time import sleep
+
+
 app = Flask(__name__)
 
 logging.basicConfig(
@@ -152,10 +155,10 @@ class MonitoringService:
         )
 
         # self.hash_metric.labels(hash=self.hash).set(1)
-
+        logging.info("##########################################")
+        sleep(10)
         for metric, value, labels in self.monitoring[dataset_name].metrics():
             logging.info("*************************************************")
-            logging.info(metric)
             logging.info(value)
             logging.info(labels)
             logging.info("*************************************************")

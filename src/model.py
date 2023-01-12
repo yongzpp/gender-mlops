@@ -24,6 +24,7 @@ class ModelService:
     def __init__(self, run_id=None, model=None):
         self.run_id = run_id
         self.model = self.load_model(self.run_id) if self.run_id else model
+        self.sklearn_model = mlflow.sklearn.load_model(f'gs://gender-bucket/4/{run_id}/artifacts/model') if self.run_id else model
 
     @staticmethod
     def prepare_features(name):

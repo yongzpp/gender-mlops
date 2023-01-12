@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: evidently
+spec:
+  selector:
+    app: evidently #forward request to deployment by tag
+  ports:
+  - port: 8085
+    targetPort: 8085

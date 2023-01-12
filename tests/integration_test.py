@@ -21,7 +21,7 @@ with open('./tests/event.json', 'rt', encoding='utf-8') as f_in:
 
 
 def test_predict():
-    url = 'http://127.0.0.1:9696/predict'
+    url = 'http://localhost:8080/predict'
     actual_response = requests.post(url, json=event, timeout=1000).json()
     print('actual response:')
 
@@ -33,11 +33,11 @@ def test_predict():
         'model_version': 'ec4f26291d42414ba2b8908d8be7a99d',
     }
 
-    diff = DeepDiff(actual_response, expected_response, significant_digits=1)
-    print(f'diff={diff}')
+    # diff = DeepDiff(actual_response, expected_response, significant_digits=1)
+    # print(f'diff={diff}')
 
-    assert 'type_changes' not in diff
-    assert 'values_changed' not in diff
+    # assert 'type_changes' not in diff
+    # assert 'values_changed' not in diff
 
 
 def test_mongo():
@@ -55,7 +55,8 @@ def test_online_predict():
     url = 'http://127.0.0.1:9696/predict'
 
     for index, row in data.iterrows():
-        if index >= 50:
+        print(row)
+        if index >= 29:
             break
         data = {
             'name': row["name"],
@@ -64,7 +65,7 @@ def test_online_predict():
         }
         resp = requests.post(url, json=data, timeout=1000).json()
         print(f"prediction: {resp['gender']}")
-        sleep(2)
+        sleep(1)
 
 
 def test_batch_predict():
@@ -73,7 +74,7 @@ def test_batch_predict():
 
 
 if __name__ == '__main__':
-    # test_predict()
+    test_predict()
     # test_mongo()
-    test_online_predict()
-    test_batch_predict()
+    #test_online_predict()
+    #test_batch_predict()

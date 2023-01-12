@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evidently
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evidently
+  template:
+    metadata:
+      labels:
+        app: evidently #tag to find service
+    spec:
+      containers:
+      - name: evidently
+        image: gender-revised_evidently_service:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 8085
+        env:
+        - name: GRAFANA_ADDRESS
+          value: grafana.default.svc.cluster.local:3000
