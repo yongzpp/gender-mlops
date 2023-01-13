@@ -14,10 +14,34 @@ spec:
     spec:
       containers:
       - name: prometheus
-        image: prom/prometheus
+        image: prom/prometheus:v1
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "100m"
+            memory: "512Mi"
+            cpu: "500m"
         ports:
         - containerPort: 9090
+        env:
+        - name: EVIDENTLY_SERVICE
+          value: http://evidently.default.svc.cluster.local:8085
+        - name: PROMETHEUS_ADDRESS
+          value: http://prometheus.default.svc.cluster.local:9090
+        volumeMounts:
+        # - name: prometheus-local
+        #   mountPath: /etc/prometheus/prometheus.yml
+          #subPath: prometheus.yml
+        - name: prometheus-data
+          mountPath: /prometheus
+      volumes:
+      - name: prometheus-data
+        emptyDir: {}
+      # - name: prometheus-local
+      #   hostPath:
+      #     path: /home/rsa-key-20221205/gender-revised/config
+
+        # configMap:
+        #   name: prometheus-config
+        #   items:
+        #   - key: prometheus.yml
+        #   - path: prometheus.yml
+          #/home/rsa-key-20221205/gender-revised/config/prometheus.yml

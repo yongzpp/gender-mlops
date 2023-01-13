@@ -13,11 +13,11 @@ spec:
     spec:
       containers:
       - name: gender-model
-        image: gender-revised_prediction_service:v1
+        image: gender-revised_prediction_service:v2
         ports:
         - containerPort: 9696
         env:
         - name: MONGODB_ADDRESS
           value: mongodb.default.svc.cluster.local:27017
         - name: EVIDENTLY_SERVICE
-          value: evidently.default.svc.cluster.local:8085
+          value: http://evidently.default.svc.cluster.local:8085

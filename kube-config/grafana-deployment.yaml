@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: grafana/grafana
+        image: grafana/grafana:v1
         resources:
           limits:
             memory: "128Mi"
@@ -23,6 +23,30 @@ spec:
         - containerPort: 3000
         env:
         - name: PROMETHEUS_ADDRESS
-          value: prometheus.default.svc.cluster.local:9090
+          value: http://prometheus.default.svc.cluster.local:9090
         - name: GF_LOG_LEVEL
           value: "error"
+        - name: EVIDENTLY_SERVICE
+          value: http://evidently.default.svc.cluster.local:8085
+      #   volumeMounts:
+      #   - name: grafana-datasources
+      #     mountPath: /etc/grafana/provisioning/datasources/datasource.yaml
+      #   - name: grafana-config
+      #     mountPath: /etc/grafana/provisioning/dashboards/dashboards.yaml
+      #   - name: grafana-dashboards
+      #     mountPath: /opt/grafana/dashboards
+      #   - name: grafana-data
+      #     mountPath: /var/lib/grafana
+      # volumes:
+      # - name: grafana-data
+      #   emptyDir: {}
+      # - name: grafana-dashboards
+      #   hostPath:
+      #     path: /home/rsa-key-20221205/gender-revised/dashboards
+      # - name: grafana-config
+      #   hostPath:
+      #     path: /home/rsa-key-20221205/gender-revised/config/grafana_dashboards.yaml
+      #     type: FileOrCreate
+      # - name: grafana-datasources
+      #   hostPath:
+      #     path: /home/rsa-key-20221205/gender-revised/config/grafana_datasources.yaml

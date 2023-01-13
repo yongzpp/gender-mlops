@@ -22,5 +22,14 @@ spec:
         ports:
         - containerPort: 8085
         env:
-        - name: GRAFANA_ADDRESS
-          value: grafana.default.svc.cluster.local:3000
+        - name: PROMETHEUS_ADDRESS
+          value: http://prometheus.default.svc.cluster.local:9090
+        - name: EVIDENTLY_SERVICE
+          value: http://evidently.default.svc.cluster.local:8085
+        volumeMounts:
+        - name: evidently-data
+          mountPath: /app/datasets
+      volumes:
+      - name: evidently-data
+        hostPath:
+          path: /home/rsa-key-20221205/gender-revised/datasets
