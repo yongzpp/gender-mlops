@@ -1,18 +1,19 @@
 from datetime import timedelta
 
-import mlflow
 import pandas as pd
-from prefect import flow, task
+from config import cfg
+from model import ModelService
+from prefect import flow
 from prefect.deployments import Deployment
 from prefect.filesystems import GCS
 from prefect.orion.schemas.schedules import CronSchedule, IntervalSchedule
 from sklearn.model_selection import train_test_split
 
-from config import cfg
-from model import ModelService
-
-gcs_block = GCS.load("gender-prefect-store")
-
+try:
+    gcs_block = GCS.load("gender-prefect-store")
+except:
+    gcs_block = GCS(bucket_path=f'gs://gender-bucket/store')
+    gcs_block.save("gender-prefect-store")
 
 @flow
 def train_flow():

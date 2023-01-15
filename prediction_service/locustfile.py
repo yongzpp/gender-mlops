@@ -1,15 +1,10 @@
 import numpy as np
-from locust import task
-from locust import between
-from locust import HttpUser
-
+from locust import HttpUser, between, task
 
 # Sample data to send
-sample ={
-    "name" : "Baby Bugs",
-    "gender": "M",
-    "numerical": 1
-}
+sample = {"name": "Baby Bugs",
+          "gender": "M",
+          "numerical": 1}
 
 # Inherit HttpUser object from locust
 class GenderUser(HttpUser):
@@ -26,6 +21,8 @@ class GenderUser(HttpUser):
     # create mathod with task decorator to send request
     @task
     def classify(self):
-        self.client.post("/predict", json=sample) # post request in json format with the endpoint 'classify'
+        self.client.post(
+            "/predict", json=sample
+        )  # post request in json format with the endpoint 'classify'
 
-    wait_time = between(0.01, 2) # set random wait time between 0.01-2 secs
+    wait_time = between(0.01, 2)  # set random wait time between 0.01-2 secs

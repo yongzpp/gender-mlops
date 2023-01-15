@@ -1,5 +1,0 @@
-data:
-    path: "./data/train_revised.csv"
-    test_path: "./data/val_revised.csv"
-train:
-    ngram: [3,4]

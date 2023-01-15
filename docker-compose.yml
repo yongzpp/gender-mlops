@@ -11,9 +11,7 @@ networks:
 
 services:
   prediction_service:
-    build:
-      context: src
-      dockerfile: Dockerfile
+    image: gender-classifier:f37sltuursxkeqqb
     depends_on:
       - evidently_service
       - mongo
@@ -21,19 +19,19 @@ services:
       EVIDENTLY_SERVICE: "http://evidently_service.:8085"
       MONGODB_ADDRESS: "mongodb://mongo.:27017/"
     ports:
-      - "9696:9696"
+      - "3000:3000"
     networks:
       - back-tier
       - front-tier
 
   evidently_service:
     build:
-      context: .
+      context: monitoring_service
       dockerfile: Dockerfile
     depends_on:
       - grafana
     volumes:
-      - ./datasets:/app/datasets
+      - ./monitoring_service/datasets:/app/datasets
     ports:
       - "8085:8085"
     networks:
@@ -43,7 +41,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring_service/config/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -61,12 +59,13 @@ services:
       - prometheus
     environment:
       GF_LOG_LEVEL: "error"
+      GF_SERVER_HTTP_PORT: 2345
     ports:
-      - "3000:3000"
+      - "2345:2345"
     volumes:
-      - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
-      - ./config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
-      - ./dashboards:/opt/grafana/dashboards
+      - ./monitoring_service/config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+      - ./monitoring_service/config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - ./monitoring_service/dashboards:/opt/grafana/dashboards
       - grafana_data:/var/lib/grafana
     networks:
       - back-tier

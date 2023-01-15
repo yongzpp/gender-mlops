@@ -21,7 +21,8 @@ disable = [
     "global-variable-not-assigned",
     "f-string-without-interpolation",
     "consider-using-sys-exit",
-    "duplicate-code"
+    "duplicate-code",
+    "bare-except"
 ]
 
 [tool.black]

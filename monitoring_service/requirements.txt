@@ -1,0 +1,6 @@
+pyyaml
+pandas
+Werkzeug~=2.0.1
+requests
+prometheus_client~=0.11.0
+evidently

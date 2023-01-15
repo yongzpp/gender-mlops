@@ -1,10 +1,6 @@
-import csv
 import json
-import os
-import pickle
 
 import pandas as pd
-import pyarrow.parquet as pq
 from evidently import ColumnMapping
 from evidently.dashboard import Dashboard
 from evidently.dashboard.tabs import ClassificationPerformanceTab
@@ -14,8 +10,6 @@ from evidently.model_profile.sections import (
 )
 from prefect import flow, task
 from pymongo import MongoClient
-
-from src.model import ModelService
 
 
 @task
@@ -36,19 +30,6 @@ def upload_target(filename):
 
 
 @task
-def load_reference_data(filename):
-    RUN_ID = '5bd26caf8a64400e89e3734bf8aa3200'
-    model = ModelService(RUN_ID)
-    reference_data = pd.read_csv(filename)
-    # Create features
-    features = ModelService.prepare_features(reference_data["name"])
-
-    # add target column
-    reference_data['prediction'] = model.predict(features)
-    return reference_data
-
-
-@task
 def fetch_data():
     client = MongoClient("mongodb://localhost:27017/")
     data = client.get_database("prediction_service").get_collection("batch").find()
@@ -60,10 +41,6 @@ def fetch_data():
 @task
 def run_evidently(ref_data, data):
     profile = Profile(sections=[ClassificationPerformanceProfileSection()])
-    print(ref_data.head())
-    print(ref_data.dtypes)
-    print(data.head())
-    print(data.dtypes)
     mapping = ColumnMapping(
         prediction="prediction",
         numerical_features=['numerical'],
@@ -94,7 +71,7 @@ def save_html_report(result):
 @flow
 def batch_analyze():
     upload_target("./results/target.csv")
-    ref_data = load_reference_data("./datasets/gender/reference.csv")
+    ref_data = pd.read_csv("./datasets/gender/reference.csv")
     data = fetch_data()
     result = run_evidently(ref_data, data)
     save_report(result)

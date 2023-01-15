@@ -1,5 +1,7 @@
 auth/*
+prediction_service/auth/*
 __pycache__
+.ipynb_checkpoints/*
 
 *.csv
 *.html

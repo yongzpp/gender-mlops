@@ -1,8 +1,10 @@
 import sys
 from datetime import timedelta
 
+import bentoml
 import mlflow
 import pandas as pd
+from config import cfg
 from prefect import flow, get_run_logger, task
 from prefect.context import get_run_context
 from prefect.deployments import Deployment
@@ -13,18 +15,22 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.pipeline import make_pipeline
 
-from config import cfg
-
 TRACKING_SERVER_HOST = "0.0.0.0"
 mlflow.set_tracking_uri(f"http://{TRACKING_SERVER_HOST}:5000")
-# gcs_block = GCS.load("gender-prefect-store")
-
 
 class ModelService:
     def __init__(self, run_id=None, model=None):
         self.run_id = run_id
         self.model = self.load_model(self.run_id) if self.run_id else model
-        self.sklearn_model = mlflow.sklearn.load_model(f'gs://gender-bucket/4/{run_id}/artifacts/model') if self.run_id else model
+        self.model_bentoml = (
+            bentoml.mlflow.import_model(
+                'gender-model',
+                f'gs://gender-bucket/4/{run_id}/artifacts/model',
+                signatures={'predict': {'batchable': True, 'batch_dim': 0}},
+            )
+            if self.run_id
+            else model
+        )
 
     @staticmethod
     def prepare_features(name):
@@ -83,6 +89,8 @@ class ModelService:
         df_result['numerical'] = df["numerical"]
         # df_result.to_parquet("./results/predictions.parquet", index=False)
         df_result.to_csv(output_file, index=False)
+        df_result.to_csv(f"./monitoring_service/results/target.csv", index=False)
+
 
     def apply_model(self, input_file, run_id, output_file):
         # logger = get_run_logger()
@@ -104,9 +112,10 @@ class ModelService:
         # run_date = ctx.flow_run.expected_start_time
 
         input_file, output_file = (
-            cfg.data.test_path,
+            f"./prediction_service/data/val_revised.csv",
+            # cfg.data.test_path,
             # f"../results/predictions_{run_date}.csv",
-            f"./results/target.csv",
+            f"./prediction_service/results/target.csv",
         )
 
         self.apply_model(

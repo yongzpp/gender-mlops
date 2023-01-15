@@ -12,5 +12,5 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    url: $PROMETHEUS_ADDRESS
-    #url: 'http://prometheus.:9090'
+    #url: $PROMETHEUS_ADDRESS
+    url: 'http://prometheus.:9090'

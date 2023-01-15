@@ -3,20 +3,27 @@ labels: # Labels related to the project for reminder (the provided labels are ju
   owner: Zi-Ping
   project: gender-bento
 include:
-- "*.py" # A pattern for matching which files to include in the bento build
+- "*.py"
 - "config.yaml"
 python:
-  packages: # Additional pip packages required by the service
+  packages:
     - mlflow
     - sklearn
     - pymongo
     - pydantic
     - pyyaml
     - pandas
-    - google-cloud-storage
     - pyarrow
     - prefect==2.3.1
     - gcsfs
     - Werkzeug
     - requests
     - locust
+docker:
+  env:
+    - RUN_ID=ec4f26291d42414ba2b8908d8be7a99d
+    #- EVIDENTLY_SERVICE=`http://evidently_service.:8085`
+    #- MONGODB_ADDRESS=mongodb://mongo.:27017/
+    #- GOOGLE_APPLICATION_CREDENTIALS='./auth/gender-service.json'
+    #- GIT_PYTHON_REFRESH='quiet'
+
