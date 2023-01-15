@@ -24,3 +24,6 @@ black
 isort
 pre-commit
 jupyter
+bentoml
+locust
+pydantic

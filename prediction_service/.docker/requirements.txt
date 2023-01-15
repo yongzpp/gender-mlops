@@ -1,0 +1,12 @@
+pyyaml
+pandas
+scikit-learn
+mlflow
+pyarrow
+prefect==2.3.1
+gcfs
+requests
+pymongo
+bentoml
+locust
+pydantic

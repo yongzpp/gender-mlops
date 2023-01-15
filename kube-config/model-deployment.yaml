@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gender-model
+spec:
+  selector:
+    matchLabels:
+      app: gender-model
+  template:
+    metadata:
+      labels:
+        app: gender-model
+    spec:
+      containers:
+      - name: gender-model
+        image: gender-revised_prediction_service:v2
+        ports:
+        - containerPort: 9696
+        env:
+        - name: MONGODB_ADDRESS
+          value: mongodb.default.svc.cluster.local:27017
+        - name: EVIDENTLY_SERVICE
+          value: http://evidently.default.svc.cluster.local:8085

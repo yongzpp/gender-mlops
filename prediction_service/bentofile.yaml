@@ -1,0 +1,29 @@
+service: "app.py:svc" # Specify entrypoint and service name
+labels: # Labels related to the project for reminder (the provided labels are just for example)
+  owner: Zi-Ping
+  project: gender-bento
+include:
+- "*.py"
+- "config.yaml"
+python:
+  packages:
+    - mlflow
+    - sklearn
+    - pymongo
+    - pydantic
+    - pyyaml
+    - pandas
+    - pyarrow
+    - prefect==2.3.1
+    - gcsfs
+    - Werkzeug
+    - requests
+    - locust
+docker:
+  env:
+    - RUN_ID=ec4f26291d42414ba2b8908d8be7a99d
+    #- EVIDENTLY_SERVICE=`http://evidently_service.:8085`
+    #- MONGODB_ADDRESS=mongodb://mongo.:27017/
+    #- GOOGLE_APPLICATION_CREDENTIALS='./auth/gender-service.json'
+    #- GIT_PYTHON_REFRESH='quiet'
+

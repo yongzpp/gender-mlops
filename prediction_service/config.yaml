@@ -3,3 +3,5 @@ data:
     test_path: "./data/val_revised.csv"
 train:
     ngram: [3,4]
+test:
+    run_id: "2a47f4923cc34c589b00773f75168747"
