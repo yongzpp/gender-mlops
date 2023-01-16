@@ -28,8 +28,9 @@ spec:
           value: http://evidently.default.svc.cluster.local:8085
         volumeMounts:
         - name: evidently-data
-          mountPath: /app/datasets
+          mountPath: /app/datasets/gender
       volumes:
       - name: evidently-data
-        hostPath:
-          path: /home/rsa-key-20221205/gender-revised/datasets
+        configMap:
+          defaultMode: 420
+          name: csv-configmap

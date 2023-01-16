@@ -3,10 +3,12 @@ import json
 import pandas as pd
 from evidently import ColumnMapping
 from evidently.dashboard import Dashboard
-from evidently.dashboard.tabs import ClassificationPerformanceTab
+from evidently.dashboard.tabs import ClassificationPerformanceTab, DataDriftTab, CatTargetDriftTab
 from evidently.model_profile import Profile
 from evidently.model_profile.sections import (
-    ClassificationPerformanceProfileSection
+    ClassificationPerformanceProfileSection,
+    DataDriftProfileSection,
+    CatTargetDriftProfileSection
 )
 from prefect import flow, task
 from pymongo import MongoClient
@@ -34,13 +36,12 @@ def fetch_data():
     client = MongoClient("mongodb://localhost:27017/")
     data = client.get_database("prediction_service").get_collection("batch").find()
     df = pd.DataFrame(list(data))
-    print(df.head())
     return df
 
 
 @task
 def run_evidently(ref_data, data):
-    profile = Profile(sections=[ClassificationPerformanceProfileSection()])
+    profile = Profile(sections=[ClassificationPerformanceProfileSection(), DataDriftProfileSection(), CatTargetDriftProfileSection()])
     mapping = ColumnMapping(
         prediction="prediction",
         numerical_features=['numerical'],
@@ -50,7 +51,7 @@ def run_evidently(ref_data, data):
     )
     profile.calculate(ref_data, data, mapping)
 
-    dashboard = Dashboard(tabs=[ClassificationPerformanceTab(verbose_level=0)])
+    dashboard = Dashboard(tabs=[ClassificationPerformanceTab(verbose_level=0), DataDriftTab(), CatTargetDriftTab(verbose_level=0)])
     dashboard.calculate(ref_data, data, mapping)
     return json.loads(profile.json()), dashboard
 

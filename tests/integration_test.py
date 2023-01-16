@@ -21,7 +21,7 @@ with open('./tests/event.json', 'rt', encoding='utf-8') as f_in:
 
 
 def test_predict():
-    url = 'http://localhost:8080/predict'
+    url = 'http://127.0.0.1:8080/predict'
     actual_response = requests.post(url, json=event, timeout=1000).json()
     print('actual response:')
 
@@ -53,7 +53,7 @@ def test_predict():
 def test_online_predict():
     data = pd.read_csv("./prediction_service/data/val_revised.csv")
 
-    url = 'http://127.0.0.1:3000/predict'
+    url = 'http://127.0.0.1:8080/predict'
 
     for index, row in data.iterrows():
         print(row)
@@ -75,7 +75,7 @@ def test_batch_predict():
 
 
 if __name__ == '__main__':
-    #test_predict()
+    # test_predict()
     # test_mongo()
     test_online_predict()
     #test_batch_predict()

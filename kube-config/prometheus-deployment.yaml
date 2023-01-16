@@ -15,6 +15,9 @@ spec:
       containers:
       - name: prometheus
         image: prom/prometheus:v1
+        args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/prometheus"
         resources:
           limits:
             memory: "512Mi"
@@ -27,17 +30,17 @@ spec:
         - name: PROMETHEUS_ADDRESS
           value: http://prometheus.default.svc.cluster.local:9090
         volumeMounts:
-        # - name: prometheus-local
-        #   mountPath: /etc/prometheus/prometheus.yml
-          #subPath: prometheus.yml
+        - name: prometheus-config-volume
+          mountPath: /etc/prometheus/
         - name: prometheus-data
           mountPath: /prometheus
       volumes:
       - name: prometheus-data
         emptyDir: {}
-      # - name: prometheus-local
-      #   hostPath:
-      #     path: /home/rsa-key-20221205/gender-revised/config
+      - name: prometheus-config-volume
+        configMap:
+          defaultMode: 420
+          name: prometheus-server-conf
 
         # configMap:
         #   name: prometheus-config

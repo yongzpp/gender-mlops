@@ -104,7 +104,6 @@ class MonitoringService:
 
         self.metrics = {}
         self.next_run_time = {}
-        logging.info("INTIALIZEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
         # self.hash = hashlib.sha256(pd.util.hash_pandas_object(self.reference["bike_random_forest"]).values).hexdigest()
         # self.hash_metric = prometheus_client.Gauge("evidently:reference_dataset_hash", "", labelnames=["hash"])
 
@@ -155,13 +154,7 @@ class MonitoringService:
         )
 
         # self.hash_metric.labels(hash=self.hash).set(1)
-        logging.info("##########################################")
-        sleep(10)
         for metric, value, labels in self.monitoring[dataset_name].metrics():
-            logging.info("*************************************************")
-            logging.info(value)
-            logging.info(labels)
-            logging.info("*************************************************")
             metric_key = f"evidently:{metric.name}"
             found = self.metrics.get(metric_key)
 
@@ -229,6 +222,7 @@ def configure_service():
                     header=dataset_config["data_format"]["header"],
                 ),
             )
+
             datasets[dataset_name] = LoadedDataset(
                 name=dataset_name,
                 references=reference_data,

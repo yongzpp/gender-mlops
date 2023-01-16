@@ -13,9 +13,9 @@ spec:
     spec:
       containers:
       - name: gender-model
-        image: gender-revised_prediction_service:v2
+        image: gender-classifier:f37sltuursxkeqqb
         ports:
-        - containerPort: 9696
+        - containerPort: 3000
         env:
         - name: MONGODB_ADDRESS
           value: mongodb.default.svc.cluster.local:27017

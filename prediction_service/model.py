@@ -15,6 +15,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.pipeline import make_pipeline
 
+from optimize import Optimizer
+
 TRACKING_SERVER_HOST = "0.0.0.0"
 mlflow.set_tracking_uri(f"http://{TRACKING_SERVER_HOST}:5000")
 
@@ -56,6 +58,10 @@ class ModelService:
 
             X_train = self.prepare_features(X_train)
             X_val = self.prepare_features(X_val)
+
+            if cfg.optimize.bayes_opt:
+                bayes_opt = Optimizer(X_train, X_val, y_train, y_val)
+                C, solver = bayes_opt.optimize()
 
             params = {"C": C, "solver": solver}
             mlflow.log_params(params)

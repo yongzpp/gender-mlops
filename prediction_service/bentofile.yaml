@@ -19,6 +19,7 @@ python:
     - Werkzeug
     - requests
     - locust
+    - hyperopt
 docker:
   env:
     - RUN_ID=ec4f26291d42414ba2b8908d8be7a99d
