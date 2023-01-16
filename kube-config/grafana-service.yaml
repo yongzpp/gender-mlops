@@ -3,8 +3,9 @@ kind: Service
 metadata:
   name: grafana
 spec:
+  type: LoadBalancer
   selector:
     app: grafana
   ports:
-  - port: 3000
-    targetPort: 3000
+  - port: 2345
+    targetPort: 2345

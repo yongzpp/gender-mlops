@@ -10,6 +10,8 @@ datasets:
       separator: ','
     monitors:
       - classification_performance
+      - data_drift
+      - cat_target_drift
 service:
   calculation_period_sec: 2
   min_reference_size: 30
