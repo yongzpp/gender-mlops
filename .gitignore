@@ -2,6 +2,9 @@ auth/*
 prediction_service/auth/*
 __pycache__
 .ipynb_checkpoints/*
+database_service/pgadmin/*
+database_service/postgres/*
+database_service/terraform/./terraform/*
 
 *.csv
 *.html
