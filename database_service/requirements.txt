@@ -1,0 +1,4 @@
+pgcli
+pandas
+sqlalchemy
+psycopg2
