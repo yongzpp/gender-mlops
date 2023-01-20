@@ -5,6 +5,8 @@ __pycache__
 database_service/pgadmin/*
 database_service/postgres/*
 database_service/terraform/./terraform/*
+database_service/.google/*
+database_service/terraform/.terraform/*
 
 *.csv
 *.html
