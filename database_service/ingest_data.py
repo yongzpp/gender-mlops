@@ -35,7 +35,7 @@ def load_data(table_name, df):
 
     gcp_cloud_storage_bucket_block = GcsBucket.load("gender-db-bucket")
     gcp_cloud_storage_bucket_block.upload_from_path(from_path="./data/name_gender.csv",
-                                                    to_path="/data/name_gender.csv")
+                                                    to_path="data/name_gender.csv")
 
     # while True:
     #     try:
