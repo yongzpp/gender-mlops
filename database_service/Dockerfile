@@ -1,4 +1,4 @@
-FROM python:3.9.1
+FROM prefecthq/prefect:2.7.7-python3.9
 
 COPY ./requirements.txt requirements.txt
 
@@ -8,4 +8,4 @@ WORKDIR /app
 COPY ingest_data.py ingest_data.py
 COPY data data
 
-ENTRYPOINT ["python", "ingest_data.py"]
+#ENTRYPOINT ["python", "ingest_data.py"]
